@@ -227,7 +227,7 @@ router.get('/especificall/:to/:amount/:token', async function (req, res, next) {
     const Valuedivisa = divisa1[0].value
     const resultado = []
     const test = ' ADA'
-    var info = await axios.get(`http://localhost:3000/info/${process.env.apiKey} `).then(response =>{ return response.data})
+    var info = await axios.get(`https://nextchangeback.herokuapp.com/info/${process.env.apiKey} `).then(response =>{ return response.data})
 
     // for (var property in info){
     //   console.log(info[property])
@@ -239,7 +239,7 @@ router.get('/especificall/:to/:amount/:token', async function (req, res, next) {
 
 
 
-    var moneda = await axios.get(`http://localhost:3000/all/${process.env.apiKey} `).then(response => { return response.data })
+    var moneda = await axios.get(`https://nextchangeback.herokuapp.com/all/${process.env.apiKey} `).then(response => { return response.data })
     for (var property in moneda) {
 
       let codigo = moneda[property].code
