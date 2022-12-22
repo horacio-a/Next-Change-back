@@ -226,16 +226,8 @@ router.get('/especificall/:to/:amount/:token', async function (req, res, next) {
     const divisa1 = await monedas.getMonedasFromID(to)
     const Valuedivisa = divisa1[0].value
     const resultado = []
-    const test = ' ADA'
-    var info = await axios.get(`https://nextchangeback.herokuapp.com/info/${process.env.apiKey} `).then(response =>{ return response.data})
+    var info = await axios.get(`https://nextchangeback.herokuapp.com/info/${process.env.apiKey} `).then(response => { return response.data })
 
-    // for (var property in info){
-    //   console.log(info[property])
-    //         if(info[property].code === test){
-    //           console.log(info[property])
-    //           break
-    //         }
-    //       }
 
 
 
@@ -246,32 +238,30 @@ router.get('/especificall/:to/:amount/:token', async function (req, res, next) {
 
 
 
-      // if (data == '') {
-      //   console.log('cripto')
-      // } else {
-        for (var i in info){
-  
-            if(info[i].code === codigo){
-              var name = info[i].name
-              var symbol_native = info[i].symbol_native
 
-              break
-            }
-            if(info[i].name === null){
-              var name = ''
-              var symbol_native = ''
-  
-            }
-          
+      for (var i in info) {
+
+        if (info[i].code === codigo) {
+          var name = info[i].name
+          var symbol_native = info[i].symbol_native
+
+          break
+        }
+        if (info[i].name === null) {
+          var name = ''
+          var symbol_native = ''
 
         }
-       
-        var code = moneda[property].code
-        var value = ((moneda[property].value / Valuedivisa) * amount)
-        var ID = moneda[property].ID
 
-        if (code != to) {
-            if(name != '')
+
+      }
+
+      var code = moneda[property].code
+      var value = ((moneda[property].value / Valuedivisa) * amount)
+      var ID = moneda[property].ID
+
+      if (code != to) {
+        if (name != '')
           resultado.push(
             {
               ID,
@@ -280,9 +270,9 @@ router.get('/especificall/:to/:amount/:token', async function (req, res, next) {
               name,
               symbol_native
             })
-        }
-
       }
+
+    }
 
 
 
@@ -309,24 +299,24 @@ router.get('/dataindex/:token', async function (req, res, next) {
   if (token == process.env.apiKey) {
 
 
-      const EUR = await monedas.getMonedasFromID(' EUR')
-      const AED = await monedas.getMonedasFromID(' AED')
-      const BRL = await monedas.getMonedasFromID(' BRL')
-      const GBP = await monedas.getMonedasFromID(' GBP')
+    const EUR = await monedas.getMonedasFromID(' EUR')
+    const AED = await monedas.getMonedasFromID(' AED')
+    const BRL = await monedas.getMonedasFromID(' BRL')
+    const GBP = await monedas.getMonedasFromID(' GBP')
 
-      const UsdEur = EUR[0].value
-      const UsdAed = AED[0].value
-      const UsdBrl = BRL[0].value
-      const EurGBp = EUR[0].value/GBP[0].value
+    const UsdEur = EUR[0].value
+    const UsdAed = AED[0].value
+    const UsdBrl = BRL[0].value
+    const EurGBp = EUR[0].value / GBP[0].value
 
 
-      
-      res.json({
-        UsdEur,
-        UsdAed,
-        UsdBrl,
-        EurGBp
-      })
+
+    res.json({
+      UsdEur,
+      UsdAed,
+      UsdBrl,
+      EurGBp
+    })
 
 
 
