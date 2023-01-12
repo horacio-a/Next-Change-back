@@ -226,12 +226,12 @@ router.get('/especificall/:to/:amount/:token', async function (req, res, next) {
     const divisa1 = await monedas.getMonedasFromID(to)
     const Valuedivisa = divisa1[0].value
     const resultado = []
-    var info = await axios.get(`https://nextchangeback.herokuapp.com/info/${process.env.apiKey} `).then(response => { return response.data })
+    var info = await axios.get(`https://api.next-change.com.arinfo/${process.env.apiKey} `).then(response => { return response.data })
 
 
 
 
-    var moneda = await axios.get(`https://nextchangeback.herokuapp.com/all/${process.env.apiKey} `).then(response => { return response.data })
+    var moneda = await axios.get(`https://api.next-change.com.ar/all/${process.env.apiKey} `).then(response => { return response.data })
     for (var property in moneda) {
 
       let codigo = moneda[property].code
