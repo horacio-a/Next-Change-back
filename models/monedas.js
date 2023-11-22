@@ -25,13 +25,14 @@ async function insertRegistroHorario(obj) {
     try {
         var query = 'insert into registro_horarios set ?';
         var rows = await pool.query(query, [obj])
+        console.log(rows)
         return rows
     } catch (error) {
         console.log(error)
     }
 }
 
-async function getMonedas(){
+async function getMonedas() {
     try {
         var query = 'select * from data'
         var rows = await pool.query(query)
@@ -41,7 +42,7 @@ async function getMonedas(){
     }
 }
 
-async function getMonedasFromID(code){
+async function getMonedasFromID(code) {
     try {
         var query = 'select * from data where code = ?'
         var rows = await pool.query(query, [code])
@@ -51,8 +52,41 @@ async function getMonedasFromID(code){
     }
 }
 
+async function getIndexData() {
+    try {
+        var query = `select * from data where code = ' EUR' OR code =' AED' OR code =' BRL' OR code =' GBP' `
+        var rows = await pool.query(query)
+        return rows
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-async function deleteMonedas(){
+async function getMonedasConver(div1, div2, amount) {
+    try {
+        var query = `select * from data where code = '${div1}' OR code = '${div2}'`
+        var rows = await pool.query(query)
+
+        if (rows[0].code === div1) {
+
+            return {
+                conversion: rows[0].value / rows[1].value * amount,
+                conversionUnidad: rows[0].value / rows[1].value
+            }
+        } else {
+            return {
+                conversion: rows[1].value / rows[0].value * amount,
+                conversionUnidad: rows[1].value / rows[0].value
+            }
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+async function deleteMonedas() {
     try {
         var query = 'delete from data'
         var rows = await pool.query(query)
@@ -61,11 +95,10 @@ async function deleteMonedas(){
     }
 }
 
-async function insertMonedas(obj) {
+async function insertMonedas(query) {
     try {
-        var query = 'insert into data set ? ';
 
-        var rows = await pool.query(query, [obj])
+        var rows = await pool.query(query)
         return rows
     } catch (error) {
         console.log(error)
@@ -73,7 +106,7 @@ async function insertMonedas(obj) {
 }
 
 
-async function insertInfo(obj){
+async function insertInfo(obj) {
     try {
         var query = 'insert into info set ?'
         var rows = await pool.query(query, [obj])
@@ -83,7 +116,7 @@ async function insertInfo(obj){
     }
 }
 
-async function getInfo(){
+async function getInfo() {
     try {
         var query = 'select * from info'
         var rows = await pool.query(query)
@@ -94,7 +127,7 @@ async function getInfo(){
 }
 
 
-async function deleteAllInfo(){
+async function deleteAllInfo() {
     try {
         var query = 'delete from info'
         var rows = await pool.query(query)
@@ -104,7 +137,7 @@ async function deleteAllInfo(){
 }
 
 
-async function getNamebyid(code){
+async function getNamebyid(code) {
     try {
         var query = 'select * from info where code = ?'
         var rows = await pool.query(query, [code])
@@ -115,4 +148,4 @@ async function getNamebyid(code){
 }
 
 
-module.exports = {getNamebyid, getInfo, deleteAllInfo, insertInfo,getMonedasFromID, insertMonedas, getLastRegistroHorario, insertRegistroHorario, deleteRegistroshorarios, getMonedas, deleteMonedas }
+module.exports = { getIndexData, getMonedasConver, getNamebyid, getInfo, deleteAllInfo, insertInfo, getMonedasFromID, insertMonedas, getLastRegistroHorario, insertRegistroHorario, deleteRegistroshorarios, getMonedas, deleteMonedas }
