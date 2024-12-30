@@ -56,6 +56,7 @@ async function getIndexData() {
     try {
         var query = `select * from data where code = ' EUR' OR code =' AED' OR code =' BRL' OR code =' GBP' `
         var rows = await pool.query(query)
+        console.log(rows)
         return rows
     } catch (error) {
         console.log(error)
