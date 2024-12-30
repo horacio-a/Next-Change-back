@@ -23,13 +23,7 @@ async function allFuncion() {
     var minuto = today.getMinutes()
     var segundo = today.getSeconds()
 
-    console.log({
-      dia,
-      mes,
-      hora,
-      minuto,
-      segundo
-    })
+
     monedas.insertRegistroHorario({
       dia,
       mes,
@@ -42,7 +36,6 @@ async function allFuncion() {
         `https://api.currencyapi.com/v3/latest?apikey=${process.env.currencyapikey}&base_currency=USD`,
       )
       .then((response) => {
-        console.log(response.data)
         return response.data;
       });
     datos = [];
@@ -91,6 +84,7 @@ router.get('/all/:token', async function (req, res, next) {
   try {
 
     if (token == process.env.apiKey) {
+
       res.json(await allFuncion())
     } else {
       res.json({
@@ -135,7 +129,6 @@ router.get('/conver/:from/:to/:amount/:token', async function (req, res, next) {
 
     try {
       const conversion = await monedas.getMonedasConver(to, from, amount)
-
       if (token == process.env.apiKey) {
 
         res.json(conversion)
@@ -170,13 +163,7 @@ router.get('/conver/:from/:to/:amount/:token', async function (req, res, next) {
     var minuto = today.getMinutes()
     var segundo = today.getSeconds()
 
-    console.log({
-      dia,
-      mes,
-      hora,
-      minuto,
-      segundo
-    })
+
     monedas.insertRegistroHorario({
       dia,
       mes,
@@ -189,7 +176,6 @@ router.get('/conver/:from/:to/:amount/:token', async function (req, res, next) {
         `https://api.currencyapi.com/v3/latest?apikey=${process.env.currencyapikey}&base_currency=USD`,
       )
       .then((response) => {
-        console.log(response.data)
         return response.data;
       });
     datos = [];
@@ -273,7 +259,6 @@ router.get('/especificall/:to/:amount/:token', async function (req, res, next) {
       }
 
     }
-
     res.json(
       resultado
     )
@@ -329,6 +314,31 @@ router.get('/dataindex/:token', async function (req, res, next) {
     })
   }
 })
+
+
+// router.get('/fillinfo', async function (req, res, next) {
+//   const response = []
+//   const data = await axios.get('https://api.currencyapi.com/v3/currencies?apikey=HtKewgMjZxWwPIiVk8koj1FMGEfjhFIUbkjxXRCI&currencies=').then((response) => {
+//     return response.data;
+//   });
+
+//   for (let clave in data.data) {
+
+//     response.push({
+//       name: data.data[clave].name,
+//       symbol: data.data[clave].symbol,
+//       symbol_native: data.data[clave].symbol_native,
+//       decimal_digits: data.data[clave].decimal_digits,
+//       rounding: data.data[clave].rounding,
+//       code: ` ${data.data[clave].code}`,
+//       name_plural: data.data[clave].name_plural,
+//     })
+//   }
+//   response.map(async (data) => {
+//     await monedas.insertInfo(data)
+//   })
+//   res.json(response)
+// })
 
 
 module.exports = router;
