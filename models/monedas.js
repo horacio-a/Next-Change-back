@@ -100,6 +100,7 @@ async function insertMonedas(query) {
     try {
 
         var rows = await pool.query(query)
+        console.log(rows)
         return rows
     } catch (error) {
         console.log(error)
